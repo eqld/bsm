@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
+
 	"github.com/eqld/bsm/framebuffer"
 )
 
@@ -83,8 +84,16 @@ func (c *Consumer) servePeerPool(ctx context.Context, peers <-chan *peer, closin
 			}
 		case frame = <-c.frames:
 			frame.Use(len(pool))
-			for _, p = range pool {
-				p.frames <- frame
+			for seqNum, p = range pool {
+				select {
+				case p.frames <- frame:
+					// frame is sent successfully
+				default:
+					// queue is full, disconnect slow peer and proceed
+					log.Printf("output stream consumer %d is considered slow, closing its connection\n", seqNum)
+					frame.Use(-1)
+					p.conn.Close()
+				}
 			}
 			frame.Use(-1)
 		case <-ctx.Done():
