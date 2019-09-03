@@ -20,7 +20,7 @@ import (
 const (
 	defaultBufferFrameSize = 1024 * 1024
 	defaultBufferFrames    = 1024
-	defaultListenInput     = "unix:///tmp/bytehub.sock"
+	defaultListenInput     = "unix:///tmp/bsm.sock"
 	defaultListenOutput    = "tcp://0.0.0.0:4096"
 )
 

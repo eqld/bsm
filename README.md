@@ -8,7 +8,7 @@ Parameters:
 
 * `-buffer-frame-size` - size of buffer frame in bytes (default 1048576)
 * `-buffer-frames` - amount of buffer frames (default 1024)
-* `-listen-input` - protocol ('tcp', 'tcp4', 'tcp6', 'unix' or 'unixpacket') and address to listen for input stream suppliers (default "unix:///tmp/bytehub.sock")
+* `-listen-input` - protocol ('tcp', 'tcp4', 'tcp6', 'unix' or 'unixpacket') and address to listen for input stream suppliers (default "unix:///tmp/bsm.sock")
 * `-listen-output` - protocol ('tcp', 'tcp4', 'tcp6', 'unix' or 'unixpacket') and address to listen for output stream consumers (default "tcp://0.0.0.0:4096")
 
 Usage example:
