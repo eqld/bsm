@@ -69,13 +69,13 @@ func main() {
 
 	suppNet, suppAddr, err := parseNetAddr(*listenInput)
 	if err != nil {
-		log.Printf("fail parse address to listen for supplier connections: %v\n", err)
+		log.Printf("fail to parse address to listen for supplier connections: %v\n", err)
 		return
 	}
 
 	consNet, consAddr, err := parseNetAddr(*listenOutput)
 	if err != nil {
-		log.Printf("fail parse address to listen for consumer connections: %v\n", err)
+		log.Printf("fail to parse address to listen for consumer connections: %v\n", err)
 		return
 	}
 
