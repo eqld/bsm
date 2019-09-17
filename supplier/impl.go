@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net"
+
 	"github.com/eqld/bsm/framebuffer"
 )
 

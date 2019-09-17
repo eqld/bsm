@@ -1,8 +1,6 @@
 package framebuffer
 
-import (
-	"context"
-)
+import "context"
 
 // Buffer is interface for frame buffer.
 type Buffer interface {
