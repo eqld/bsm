@@ -23,7 +23,7 @@ func New(size, count int) Buffer {
 			queue:   fs.queue,
 		}
 
-		go f.serve(fs.done)
+		go f.loop(fs.done)
 
 		fs.queue <- f
 	}
@@ -76,7 +76,7 @@ type frame struct {
 	queue     chan<- *frame
 }
 
-func (f *frame) serve(done <-chan struct{}) {
+func (f *frame) loop(done <-chan struct{}) {
 	var n int
 	for {
 		select {
