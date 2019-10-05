@@ -112,11 +112,10 @@ func (c *Consumer) servePeerPool(ctx context.Context, peers <-chan *peer, closin
 }
 
 func (c *Consumer) acceptPeerConns(ctx context.Context, peers chan<- *peer, closings chan<- int) {
-	var i int
-	for {
+	// we need at least one always free frame to be able to detect slow peers
+	peerFramesCap := cap(c.frames) - 1
+	for i := 0; ; i++ {
 		select {
-		case <-ctx.Done():
-			return
 		default:
 			conn, err := c.listener.Accept()
 			if err != nil {
@@ -127,7 +126,7 @@ func (c *Consumer) acceptPeerConns(ctx context.Context, peers chan<- *peer, clos
 			p := &peer{
 				seqNum:   i,
 				conn:     conn,
-				frames:   make(chan framebuffer.Frame, cap(c.frames)),
+				frames:   make(chan framebuffer.Frame, peerFramesCap),
 				closings: closings,
 			}
 
@@ -139,8 +138,8 @@ func (c *Consumer) acceptPeerConns(ctx context.Context, peers chan<- *peer, clos
 			case <-ctx.Done():
 				return
 			}
-
-			i++
+		case <-ctx.Done():
+			return
 		}
 	}
 }
